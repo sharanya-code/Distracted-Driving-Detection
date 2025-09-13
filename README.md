@@ -34,3 +34,7 @@ This system aims to:
 - **EYE_AR_CONSEC_FRAMES = 30** → number of frames before drowsiness triggers.
 - **YAWN_THRESH = 7.5** → lip distance threshold for yawning.
 - **YAWN_MIN_FRAMES = 15** → frames required to confirm yawning.
+
+## 🎬 Demo
+https://github.com/user-attachments/assets/b4b56956-a4ec-4ce1-9eb2-fad387e6d062
+
