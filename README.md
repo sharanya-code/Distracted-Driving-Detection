@@ -35,6 +35,106 @@ This system aims to:
 - **YAWN_THRESH = 7.5** → lip distance threshold for yawning.
 - **YAWN_MIN_FRAMES = 15** → frames required to confirm yawning.
 
+
 ## 🎬 Demo
+
 https://github.com/user-attachments/assets/b4b56956-a4ec-4ce1-9eb2-fad387e6d062
+
+
+# Distracted Driver Detection 📱🚗  
+
+This module trains and evaluates deep learning models to detect **distracted driving behaviors**. The system is designed to recognize:  
+- **Normal Driving (class 0)**  
+- **Texting (class 1)**  
+- **Talking on the Phone (class 2)**  
+
+By automating the detection of these behaviors, the system supports **driver safety research**, fleet monitoring, and development of **driver assistance systems**.  
+
+---
+
+## 🔹 Dataset  
+
+The script expects a dataset organized into class-specific subfolders under a given `root_dir`.  
+
+### Training Data Format:  
+
+- Classes `c1` and `c3` are **merged** into class 1 (texting).  
+- Classes `c2` and `c4` are **merged** into class 2 (talking).  
+- The model therefore predicts **3 consolidated classes**.  
+
+### Test Data Format:  
+
+Unlabeled test data is supported for inference and CSV output.  
+
+---
+
+## 🔹 Model  
+
+This script uses **transfer learning** with [timm](https://github.com/rwightman/pytorch-image-models).  
+- Default: `mobilenetv3_small_100`  
+- Other options: `efficientnet_b0`, etc.  
+
+### Architecture  
+- Pretrained backbone (ImageNet weights).  
+- Final classifier layer replaced with a new `nn.Linear` → outputs **3 classes**.  
+
+---
+
+## 🔹 Training  
+
+The training loop is defined in the `train()` function.  
+
+1. **Preprocessing**  
+   - Grayscale conversion → 3 channels.  
+   - Resize to `224 × 224`.  
+   - Random horizontal flip (augmentation).  
+   - Normalize with ImageNet mean/std.  
+
+2. **Split**  
+   - Training/validation split controlled by `val_split` (default: 0.2).  
+
+3. **Optimization**  
+   - Optimizer: `Adam` with weight decay `1e-5`.  
+   - Loss: `CrossEntropyLoss`.  
+   - Scheduler: `CosineAnnealingLR`.  
+
+4. **Checkpoints**  
+   - Saves the **best model** by validation accuracy to `<backbone>_best.pth`.  
+
+## 🔹 Inference
+The trained models can be used for:
+
+- Webcam Inference: Real-time detection with labels overlayed.
+
+- Test Set Evaluation: Generates CSV predictions.
+
+- Video Annotation: Saves annotated videos with predicted labels and confidence.
+
+- Ensemble Mode: Combines predictions from multiple backbones.
+
+## 🎬 Demo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
